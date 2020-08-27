@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.etrans.jdbc.mapper.UserMapper">
+    <!-- 查询所有 -->
+    <select id="queryUserList" resultType="User">
+		SELECT id, username, password FROM t_user
+	</select>
+
+    <!-- 查询单个 resultType不区分大小写 -->
+    <select id="queryUserById" parameterType="java.lang.Integer" resultType="User">
+		SELECT id, username, password FROM t_user WHERE id = #{id}
+	</select>
+
+    <!-- 更改操作 -->
+    <update id="updateUser" parameterType="com.etrans.jdbc.pojo.User">
+		UPDATE t_user SET username = #{username}, password = ${password} WHERE id = #{id}
+	</update>
+
+    <!-- 删除操作 -->
+    <delete id="deleteUser">
+		DELETE FROM t_user WHERE id = #{id}
+	</delete>
+
+
+    <!-- 参数类型 parameterTypekey可以省略 -->
+
+    <!-- 保存操作 -->
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_user (username, password) VALUES (#{username}, #{password})
+	</insert>
+
+	<!-- 查询结果总数 resultType 不能省略-->
+	<select id="queryForUserCount" resultType="java.lang.Integer">
+		SELECT COUNT(id) FROM t_user
+	</select>
+
+
+</mapper>
+
